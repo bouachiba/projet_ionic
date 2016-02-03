@@ -1,0 +1,52 @@
+{% extends 'layouts/front-layout.html.twig' %}
+
+{% block content %}
+    <h2>Liste des articles</h2>
+
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+            <div class="col-md-3">
+            <img class="img-responsive" src="http://placehold.it/100x100">
+            </div>
+            <div class="col-md-9">
+            <h3 class="article-list-title">Titre article</h3>
+                <p>par Seb le 05/09/2015</p>
+                <p>5 commentaires</p>
+            </div>
+            </div>
+            <div class="panel-footer text-right">
+                <a href="{{ path('article_details',{'id': 1}) }}">En savoir plus</a>
+            </div>
+        </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="col-md-3">
+                <img class="img-responsive" src="http://placehold.it/100x100">
+            </div>
+            <div class="col-md-9">
+                <h3 class="article-list-title">Titre article</h3>
+                <p>par Seb le 05/09/2015</p>
+                <p>5 commentaires</p>
+            </div>
+        </div>
+        <div class="panel-footer text-right">En savoir plus</div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="col-md-3">
+                <img class="img-responsive" src="http://placehold.it/100x100">
+            </div>
+            <div class="col-md-9">
+                <h3 class="article-list-title">Titre article</h3>
+                <p>par Seb le 05/09/2015</p>
+                <p>5 commentaires</p>
+            </div>
+        </div>
+        <div class="panel-footer text-right">En savoir plus</div>
+    </div>
+
+
+{% endblock %}

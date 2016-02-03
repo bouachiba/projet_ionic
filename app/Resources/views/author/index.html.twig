@@ -1,0 +1,30 @@
+{% extends 'layouts/front-layout.html.twig' %}
+
+{% block content %}
+    <h1>Zone sécurisée des auteurs</h1>
+
+    <table class="table">
+        <tr>
+            <th>Article</th>
+            <th>nb commentaires</th>
+            <th></th>
+        </tr>
+
+        <tr>
+            <td>Article 1</td>
+            <td>5</td>
+            <td><a>modifier</a></td>
+        </tr>
+
+        <tr>
+            <td>Article 2</td>
+            <td>3</td>
+            <td><a>modifier</a></td>
+        </tr>
+    </table>
+{% endblock %}
+
+{% block aside %}
+    <a href="{{ path('article_new') }}">Nouvel article</a>
+    <a href="{{ path('author_edit') }}">Modifier mon compte</a>
+{% endblock %}
