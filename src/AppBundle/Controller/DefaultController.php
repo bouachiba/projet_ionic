@@ -32,7 +32,7 @@ class DefaultController extends AbstractFrontEndController
     public function aboutAction(){
         return $this->render(
             'static/about.html.twig',
-            array()
+            $this->getAsideData()
         );
     }
 
