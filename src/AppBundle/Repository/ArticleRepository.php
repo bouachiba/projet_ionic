@@ -12,4 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
+
+    public function getLastArticles($numberOfArticles){
+        return $this->findBy(
+            array(),
+            array('createdAt' => 'DESC'),
+            $numberOfArticles,
+            0
+        );
+    }
 }
