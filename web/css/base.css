@@ -13,3 +13,7 @@ footer {
 .article-small-img {
     max-width: 100px;
 }
+
+.article-large-img {
+    max-width: 500px;
+}
