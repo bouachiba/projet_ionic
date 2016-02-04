@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Image;
+use AppBundle\Entity\Author;
 
 /**
  * Article
@@ -63,6 +64,14 @@ class Article
      * @ORM\OneToOne(targetEntity="Image", cascade = {"persist", "remove"})
      */
     private $image;
+
+    /**
+     * @var Author
+     *
+     * @ORM\ManyToOne(targetEntity="Author")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
 
 
     /**
@@ -211,5 +220,28 @@ class Article
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set author
+     *
+     * @param Author $author
+     * @return Article
+     */
+    public function setAuthor(Author $author)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return Author
+     */
+    public function getAuthor()
+    {
+        return $this->author;
     }
 }
