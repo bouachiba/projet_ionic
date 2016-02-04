@@ -170,7 +170,7 @@ Verum ad istam omnem orationem brevis est defensio. Nam quoad aetas M. Caeli dar
                 'fisrtName' => 'Fabrice',
                 'email' => 'fhaski@mediapart.com',
                 'penName' => null,
-                'numberOfPosts' => 5
+                'numberOfArticles' => 5
             ),
             array (
                 'id' => 2,
@@ -179,7 +179,26 @@ Verum ad istam omnem orationem brevis est defensio. Nam quoad aetas M. Caeli dar
                 'fisrtName' => 'Paul',
                 'email' => 'pauster@yahoo.com',
                 'penName' => null,
-                'numberOfPosts' => 3
+                'numberOfArticles' => 3
+            ),
+
+            array (
+                'id' => 3,
+                'fullName' => 'Emile Zola',
+                'name' => 'Zola',
+                'fisrtName' => 'Emile',
+                'email' => 'jaccuse@yahoo.com',
+                'penName' => null,
+                'numberOfArticles' => 3
+            ),
+            array (
+                'id' => 2,
+                'fullName' => 'Joseph Pulitzer',
+                'name' => 'Pulitzer',
+                'fisrtName' => 'Joseph',
+                'email' => 'jpulitzer@gmail.com',
+                'penName' => null,
+                'numberOfArticles' => 3
             )
         );
 
@@ -220,5 +239,28 @@ Verum ad istam omnem orationem brevis est defensio. Nam quoad aetas M. Caeli dar
         );
 
         return $archive;
+    }
+
+    public function getAllComments(){
+        $comments = array(
+            array (
+                'author' => 'paul@yahoo.com',
+                'date' => new DateTime('-5 days'),
+                'text' => 'Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.'
+            ),
+            array (
+                'author' => 'alice@wanadoo.fr',
+                'date' => new DateTime('-16 days'),
+                'text' => 'Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.'
+            ),
+
+            array (
+                'author' => 'pierre@gnolu.com',
+                'date' => new DateTime('-20 days'),
+                'text' => 'Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.'
+            )
+        );
+
+        return $comments;
     }
 }
