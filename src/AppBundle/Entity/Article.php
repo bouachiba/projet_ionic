@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Image;
 
 /**
  * Article
@@ -55,6 +56,13 @@ class Article
      * @ORM\Column(name="updatedAt", type="datetime", nullable=true)
      */
     private $updatedAt;
+
+    /**
+     * @var Image
+     *
+     * @ORM\OneToOne(targetEntity="Image", cascade = {"persist", "remove"})
+     */
+    private $image;
 
 
     /**
@@ -180,5 +188,28 @@ class Article
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set image
+     *
+     * @param Image $image
+     * @return Article
+     */
+    public function setImage(Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return Image
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }
