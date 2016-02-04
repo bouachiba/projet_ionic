@@ -21,10 +21,10 @@ class ArticleController extends AbstractFrontEndController
      */
     public function indexAction()
     {
-        $dataProvider = $this->getDataProvider();
+        $ArticleRepository = $this->getDoctrine()->getRepository('AppBundle:Article');
 
         $params = $this->getAsideData();
-        $params['allArticles'] = $dataProvider->getAllArticles();
+        $params['allArticles'] = $ArticleRepository->findAll();
 
         return $this->render('article/index.html.twig', $params);
     }
