@@ -1,0 +1,3 @@
+services:
+  data_provider:
+    class: AppBundle\Services\FakeDataProvider
