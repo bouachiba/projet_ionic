@@ -25,7 +25,7 @@ class ImageFixture extends AbstractFixture implements OrderedFixtureInterface
 
         $images = array();
         for($i=0 ; $i < $nbFixtures; $i++){
-            $fileName = 'img'.str_pad(($i+1), 2, '0', STR_PAD_LEFT);
+            $fileName = 'img'.str_pad(($i+1), 2, '0', STR_PAD_LEFT).'.jpg';
             $images[$i] = new Image();
             $images[$i] ->setFileName($fileName)
                         ->setLegend($faker->text(120))
