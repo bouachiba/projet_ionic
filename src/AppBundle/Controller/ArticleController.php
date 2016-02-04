@@ -33,12 +33,12 @@ class ArticleController extends AbstractFrontEndController
      * @Route("/{id}", name="article_details")
      * @return Response
      */
-    public function detailsAction()
+    public function detailsAction($id)
     {
-        $dataProvider = $this->getDataProvider();
+        $ArticleRepository = $this->getDoctrine()->getRepository('AppBundle:Article');
 
         $params = $this->getAsideData();
-        $params['article'] = $dataProvider->getOneArticle();
+        $params['article'] = $ArticleRepository->find($id);
 
         return $this->render('article/details.html.twig', $params);
     }
