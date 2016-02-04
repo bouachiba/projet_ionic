@@ -9,3 +9,7 @@ footer {
 .article-medium-img {
     max-width: 300px;
 }
+
+.article-small-img {
+    max-width: 100px;
+}

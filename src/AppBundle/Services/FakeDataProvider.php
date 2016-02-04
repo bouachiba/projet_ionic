@@ -34,7 +34,8 @@ class FakeDataProvider
                     'fileName' => 'img01.jpg',
                     'legend' => 'une légende',
                     'credit' => 'Sébastien Maloron'
-                )
+                ),
+                'comments' => array('a', 'b', 'c')
             ),
             array (
                 'id' => 2,
@@ -55,7 +56,8 @@ class FakeDataProvider
                     'fileName' => 'img02.jpg',
                     'legend' => 'une légende',
                     'credit' => 'Sébastien Maloron'
-                )
+                ),
+                'comments' => array('a', 'b', 'c','d')
             ),
             array (
                 'id' => 3,
@@ -76,7 +78,8 @@ class FakeDataProvider
                     'fileName' => 'img03.jpg',
                     'legend' => 'une légende',
                     'credit' => 'Sébastien Maloron'
-                )
+                ),
+                'comments' => array('a', 'b', 'c', 'd', 'e')
             ),
             array (
                 'id' => 4,
@@ -97,7 +100,8 @@ class FakeDataProvider
                     'fileName' => 'img04.jpg',
                     'legend' => 'une légende',
                     'credit' => 'Sébastien Maloron'
-                )
+                ),
+                'comments' => array('a', 'b', 'c')
             )
         );
 
