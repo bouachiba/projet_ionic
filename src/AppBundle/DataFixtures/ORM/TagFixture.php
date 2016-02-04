@@ -2,13 +2,14 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\Author;
+use AppBundle\Entity\Tag;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker;
 
-class AuthorFixture extends AbstractFixture implements OrderedFixtureInterface
+
+class TagFixture extends AbstractFixture implements OrderedFixtureInterface
 {
 
     /**
@@ -19,19 +20,19 @@ class AuthorFixture extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create();
-        $nbFixtures = 5;
+        $tagList = array(   'PHP', 'Photographie', 'Java',
+                            'Symfony', 'Javascript', 'Cordova',
+                            'Art', 'Politique', 'Sport', 'Divers');
+        $nbFixtures = count($tagList);
 
-        $authors = array();
+        $tags = array();
         for($i=0 ; $i < $nbFixtures; $i++){
-            $authors[$i] = new Author();
-            $authors[$i]->setFirstName($faker->firstName)
-                ->setName($faker->name)
-                ->setEmail($faker->email)
-                ->setPassword(sha1('pass'));
+            $tags[$i] = new Tag();
+            $tags[$i]->setTagName($tagList[$i]);
 
-            $manager->persist($authors[$i]);
+            $manager->persist($tags[$i]);
 
-            $this->addReference('auteur_'.$i, $authors[$i]);
+            $this->addReference('tag_'.$i, $tags[$i]);
         }
 
         $manager->flush();
@@ -44,6 +45,6 @@ class AuthorFixture extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 1;
+        return 2;
     }
 }
