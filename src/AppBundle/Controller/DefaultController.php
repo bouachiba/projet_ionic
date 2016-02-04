@@ -31,4 +31,14 @@ class DefaultController extends Controller
             array()
         );
     }
+
+    /**
+     * @Route("/test")
+     * @return Response
+     */
+    public function testAction(){
+        $dataProvider = $this->get('data_provider');
+        $data = $dataProvider->getAllArticles();
+        return $this->render('default/test.html.twig', array('data' => $data));
+    }
 }
