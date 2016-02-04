@@ -2,12 +2,11 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Services\FakeDataProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Controller\AbstractFrontEndController;
 
-class DefaultController extends Controller
+class DefaultController extends AbstractFrontEndController
 {
     /**
      * @Route("/", name="homepage")
@@ -16,23 +15,13 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $dataProvider = $this->getDataProvider();
-        $tags = $dataProvider->getTags();
-        $archives = $dataProvider->getArchive();
-        $authors = $dataProvider->getAllAuthors();
-        $lastComments = $dataProvider->getAllComments();
-        $popularArticles = $dataProvider->getAllArticles();
 
-        $lastArticles = $dataProvider->getAllArticles();
+        $params = $this->getAsideData();
+        $params['lastArticles'] = $dataProvider->getAllArticles();
 
         return $this->render(
             'default/index.html.twig',
-            array(  'tags'    => $tags,
-                    'archives' => $archives,
-                    'authors' => $authors,
-                    'lastArticles'=> $lastArticles,
-                    'popularArticles'=> $popularArticles,
-                    'lastComments'=> $lastComments
-            )
+            $params
         );
     }
 
@@ -57,10 +46,5 @@ class DefaultController extends Controller
         return $this->render('default/test.html.twig', array('data' => $data));
     }
 
-    /**
-     * @return FakeDataProvider
-     */
-    private function getDataProvider(){
-        return $this->get('data_provider');
-    }
+
 }
