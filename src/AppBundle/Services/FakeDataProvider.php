@@ -34,7 +34,8 @@ class FakeDataProvider
                     'fileName' => 'img01.jpg',
                     'legend' => 'une légende',
                     'credit' => 'Sébastien Maloron'
-                )
+                ),
+                'comments' => array('a', 'b', 'c')
             ),
             array (
                 'id' => 2,
@@ -55,7 +56,8 @@ class FakeDataProvider
                     'fileName' => 'img02.jpg',
                     'legend' => 'une légende',
                     'credit' => 'Sébastien Maloron'
-                )
+                ),
+                'comments' => array('a', 'b', 'c','d')
             ),
             array (
                 'id' => 3,
@@ -76,7 +78,8 @@ class FakeDataProvider
                     'fileName' => 'img03.jpg',
                     'legend' => 'une légende',
                     'credit' => 'Sébastien Maloron'
-                )
+                ),
+                'comments' => array('a', 'b', 'c', 'd', 'e')
             ),
             array (
                 'id' => 4,
@@ -97,7 +100,8 @@ class FakeDataProvider
                     'fileName' => 'img04.jpg',
                     'legend' => 'une légende',
                     'credit' => 'Sébastien Maloron'
-                )
+                ),
+                'comments' => array('a', 'b', 'c')
             )
         );
 
@@ -116,9 +120,9 @@ Haec igitur prima lex amicitiae sanciatur, ut ab amicis honesta petamus, amicoru
 
 Verum ad istam omnem orationem brevis est defensio. Nam quoad aetas M. Caeli dare potuit isti suspicioni locum, fuit primum ipsius pudore, deinde etiam patris diligentia disciplinaque munita. Qui ut huic virilem togam deditšnihil dicam hoc loco de me; tantum sit, quantum vos existimatis; hoc dicam, hunc a patre continuo ad me esse deductum; nemo hunc M. Caelium in illo aetatis flore vidit nisi aut cum patre aut mecum aut in M. Crassi castissima domo, cum artibus honestissimis erudiretur.',
             'tags' => array (
-                array ('name' => 'angular'),
-                array ('name' => 'javascript'),
-                array ('name' => 'frontEnd')
+                array ('tagName' => 'angular'),
+                array ('tagName' => 'javascript'),
+                array ('tagName' => 'frontEnd')
             ),
             'createdAt' => new DateTime('-1 month'),
             'updatedAt' => new DateTime('-5 days'),
