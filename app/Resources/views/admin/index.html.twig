@@ -23,5 +23,12 @@
 {% endblock %}
 
 {% block aside %}
-    <a href="{{ path('author_new') }}">Nouvel auteur</a>
+    <ul class="nav nav-pills nav-stacked">
+        <li>
+            <a href="{{ path('author_new') }}" class="btn btn-default">
+                <i class="glyphicon glyphicon-plus"></i>
+                Nouvel auteur
+            </a>
+        </li>
+    </ul>
 {% endblock %}
