@@ -31,7 +31,7 @@ class AuthorFixture extends AbstractFixture implements OrderedFixtureInterface
 
             $manager->persist($authors[$i]);
 
-            $this->addReference('auteur_'.$i, $authors[$i]);
+            $this->addReference('author_'.$i, $authors[$i]);
         }
 
         $manager->flush();
