@@ -158,6 +158,9 @@ class PlaygroundController extends Controller
         $tagRepository= $this->getDoctrine()->getRepository('AppBundle:Tag');
         $data = $tagRepository->getTagList();
 
+        $articleRepository= $this->getDoctrine()->getRepository('AppBundle:Article');
+        $data = $articleRepository->getArchive();
+
         return $this->render('playground/query-playground.html.twig',
             array('data' => $data)
         );

@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
+
 /**
  * ArticleRepository
  *
@@ -13,6 +14,10 @@ use Doctrine\ORM\EntityRepository;
 class ArticleRepository extends EntityRepository
 {
 
+    /**
+     * @param $numberOfArticles
+     * @return array
+     */
     public function getLastArticles($numberOfArticles){
         return $this->findBy(
             array(),
@@ -21,4 +26,20 @@ class ArticleRepository extends EntityRepository
             0
         );
     }
+
+    public function getArchive(){
+        // Attention, l'utilisation de la fonction YEAR
+        // impose l'installation de la bibliothèque
+        // orocrm/doctrine-extensions
+        $em = $this->getEntityManager();
+        $query = $em->createQuery(
+            "SELECT YEAR(a.createdAt) as year_published,
+              COUNT(a.id) as numberOfArticles
+              FROM AppBundle:Article as a
+              GROUP BY year_published"
+        );
+        return $query->getArrayResult();
+    }
+
+
 }

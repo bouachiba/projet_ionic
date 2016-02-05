@@ -19,9 +19,12 @@ abstract class AbstractFrontEndController extends Controller
         $tagRepository= $this->getDoctrine()->getRepository('AppBundle:Tag');
         $tags = $tagRepository->getTagList();
 
+        $articleRepository= $this->getDoctrine()->getRepository('AppBundle:Article');
+        $archives = $articleRepository->getArchive();
+
         $dataProvider = $this->getDataProvider();
         //$tags = $dataProvider->getTags();
-        $archives = $dataProvider->getArchive();
+        //$archives = $dataProvider->getArchive();
         $authors = $dataProvider->getAllAuthors();
         $lastComments = $dataProvider->getAllComments();
         $popularArticles = $dataProvider->getAllArticles();
