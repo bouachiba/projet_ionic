@@ -53,7 +53,7 @@
         <div class="panel-body">
             {% for comment in lastComments %}
                 <div>
-                    <strong>le {{ comment.date | date('d/m/Y') }} par {{ comment.author }}</strong>
+                    <strong>le {{ comment.createdAt | date('d/m/Y') }} par {{ comment.author }}</strong>
                     <p>{{ comment.text }}</p>
                 </div>
                 <hr>
