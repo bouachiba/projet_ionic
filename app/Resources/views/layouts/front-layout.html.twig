@@ -51,7 +51,11 @@
         <div class="panel-body">
             {% for article in popularArticles %}
                 <div>
-                    <h4>{{ article.title }}</h4>
+                    <h4>
+                        <a href="{{ path('article_details', {'id': article.id}) }}">
+                        {{ article.title }}
+                        </a>
+                    </h4>
                     <strong>
                         le {{ article.createdAt | date('d/m/Y') }} par {{ article.authorName }}
                         ({{ article.numberOfComments }} commentaires)
@@ -68,7 +72,11 @@
         <div class="panel-body">
             {% for comment in lastComments %}
                 <div>
-                    <strong>le {{ comment.createdAt | date('d/m/Y') }} par {{ comment.author }}</strong>
+                    <strong>
+                        <a href="{{ path('article_details', {'id': comment.article.id}) }}">
+                        le {{ comment.createdAt | date('d/m/Y') }} par {{ comment.author }}
+                        </a>
+                    </strong>
                     <p>{{ comment.text }}</p>
                 </div>
                 <hr>
