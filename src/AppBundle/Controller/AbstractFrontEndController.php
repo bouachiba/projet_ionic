@@ -15,8 +15,12 @@ abstract class AbstractFrontEndController extends Controller
     }
 
     protected function getAsideData(){
+
+        $tagRepository= $this->getDoctrine()->getRepository('AppBundle:Tag');
+        $tags = $tagRepository->getTagList();
+
         $dataProvider = $this->getDataProvider();
-        $tags = $dataProvider->getTags();
+        //$tags = $dataProvider->getTags();
         $archives = $dataProvider->getArchive();
         $authors = $dataProvider->getAllAuthors();
         $lastComments = $dataProvider->getAllComments();

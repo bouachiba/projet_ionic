@@ -152,6 +152,18 @@ class PlaygroundController extends Controller
     }
 
     /**
+     * @Route("/query")
+     */
+    public function testQueries(){
+        $tagRepository= $this->getDoctrine()->getRepository('AppBundle:Tag');
+        $data = $tagRepository->getTagList();
+
+        return $this->render('playground/query-playground.html.twig',
+            array('data' => $data)
+        );
+    }
+
+    /**
      * @return EntityManager
      */
     private function getDoctrineManager(){
