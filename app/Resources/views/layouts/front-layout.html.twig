@@ -21,7 +21,11 @@
         <div class="panel-body">
             <ul class="list-inline">
                 {% for archive in archives %}
-                    <li>{{ archive.year_published }} ({{ archive.numberOfArticles }})</li>
+                    <li>
+                        <a href="{{ path('article_by_year', {'year' : archive.year_published}) }}">
+                        {{ archive.year_published }} ({{ archive.numberOfArticles }})
+                        </a>
+                    </li>
                 {% endfor %}
             </ul>
         </div>

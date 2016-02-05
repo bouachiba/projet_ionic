@@ -75,5 +75,14 @@ class ArticleRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function getArticleByYear($year){
+        $qb = $this->createQueryBuilder('a')
+            ->select('a')
+            ->where('YEAR(a.createdAt)= :year')
+            ->setParameter('year', $year);
+
+        return $qb->getQuery()->getResult();
+    }
+
 
 }

@@ -59,6 +59,25 @@ class ArticleController extends AbstractFrontEndController
     }
 
     /**
+     * @Route("/by-year/{year}", name="article_by_year",
+     * requirements={"year": "\d{4}"}
+     * )
+     * @param $year
+     * @return Response
+     */
+    public function showByYearAction($year){
+        $ArticleRepository = $this->getDoctrine()->getRepository('AppBundle:Article');
+
+        $params = $this->getAsideData();
+        $params['allArticles'] = $ArticleRepository->getArticleByYear($year);
+        $params['queryTitle'] = "par année : $year";
+
+        return $this->render('article/index.html.twig', $params);
+    }
+
+
+
+    /**
      * @Route("/new", name="article_new")
      * @Route("/edit/{id}", name="article_edit")
      * @param int $id
