@@ -21,11 +21,12 @@ abstract class AbstractFrontEndController extends Controller
 
         $articleRepository= $this->getDoctrine()->getRepository('AppBundle:Article');
         $archives = $articleRepository->getArchive();
+        $authors = $articleRepository->getAuthorListForAside();
 
         $dataProvider = $this->getDataProvider();
         //$tags = $dataProvider->getTags();
         //$archives = $dataProvider->getArchive();
-        $authors = $dataProvider->getAllAuthors();
+        //$authors = $dataProvider->getAllAuthors();
         $lastComments = $dataProvider->getAllComments();
         $popularArticles = $dataProvider->getAllArticles();
 

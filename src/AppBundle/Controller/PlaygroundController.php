@@ -161,6 +161,9 @@ class PlaygroundController extends Controller
         $articleRepository= $this->getDoctrine()->getRepository('AppBundle:Article');
         $data = $articleRepository->getArchive();
 
+        //$authorRepository = $this->getDoctrine()->getRepository('AppBundle:Author');
+        $data = $articleRepository->getAuthorListForAside();
+
         return $this->render('playground/query-playground.html.twig',
             array('data' => $data)
         );

@@ -41,5 +41,14 @@ class ArticleRepository extends EntityRepository
         return $query->getArrayResult();
     }
 
+    public function getAuthorListForAside(){
+        $qb = $this->createQueryBuilder('a')
+            ->select("w.id, concat_ws(' ',w.firstName,w.name) as fullName, COUNT(a.id) as numberOfArticles")
+            ->join('a.author','w')
+            ->addGroupBy('w.id');
+
+        return $qb->getQuery()->getArrayResult();
+    }
+
 
 }
