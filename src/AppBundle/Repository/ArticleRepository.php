@@ -84,5 +84,15 @@ class ArticleRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function getArticleByAuthor($id){
+        $qb = $this->createQueryBuilder('a')
+            ->select('a')
+            ->join('a.author', 'w')
+            ->where('w.id= :id')
+            ->setParameter('id', $id);
+
+        return $qb->getQuery()->getResult();
+    }
+
 
 }

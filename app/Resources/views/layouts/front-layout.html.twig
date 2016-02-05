@@ -36,7 +36,11 @@
         <div class="panel-body">
             <ul class="list-inline">
                 {% for author in authors %}
-                    <li>{{ author.fullName }} ({{ author.numberOfArticles }})</li>
+                    <li>
+                        <a href="{{ path('article_by_author', {'id' : author.id}) }}">
+                        {{ author.fullName }} ({{ author.numberOfArticles }})
+                        </a>
+                    </li>
                 {% endfor %}
             </ul>
         </div>

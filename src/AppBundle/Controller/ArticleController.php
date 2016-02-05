@@ -75,7 +75,25 @@ class ArticleController extends AbstractFrontEndController
         return $this->render('article/index.html.twig', $params);
     }
 
+    /**
+     * @Route("/by-author/{id}", name="article_by_author",
+     * requirements={"id": "\d+"}
+     * )
+     * @param $id
+     * @return Response
+     */
+    public function showByAuyhorAction($id){
+        $ArticleRepository = $this->getDoctrine()->getRepository('AppBundle:Article');
+        $authorRepository = $this->getDoctrine()->getRepository('AppBundle:Author');
 
+        $author = $authorRepository->find($id);
+
+        $params = $this->getAsideData();
+        $params['allArticles'] = $ArticleRepository->getArticleByAuthor($id);
+        $params['queryTitle'] = "par auteur : ".$author->getFullName();
+
+        return $this->render('article/index.html.twig', $params);
+    }
 
     /**
      * @Route("/new", name="article_new")
