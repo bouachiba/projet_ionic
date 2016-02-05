@@ -50,5 +50,20 @@ class ArticleRepository extends EntityRepository
         return $qb->getQuery()->getArrayResult();
     }
 
+    public function getMostPopularArticles($numberOfArticles){
+        $qb = $this->createQueryBuilder('a')
+            ->select("a.id, a.title, a.lead, a.createdAt,
+                concat_ws(' ',w.firstName,w.name) as authorName,
+                COUNT(a.id) as numberOfComments")
+            ->join('a.comments','c')
+            ->join('a.author','w')
+            ->orderBy('numberOfComments', 'DESC')
+            ->addOrderBy('a.createdAt', 'DESC')
+            ->addGroupBy('a.id')
+            ->setMaxResults($numberOfArticles);
+
+        return $qb->getQuery()->getArrayResult();
+    }
+
 
 }

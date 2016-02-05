@@ -163,6 +163,7 @@ class PlaygroundController extends Controller
 
         //$authorRepository = $this->getDoctrine()->getRepository('AppBundle:Author');
         $data = $articleRepository->getAuthorListForAside();
+        $data = $articleRepository->getMostPopularArticles(20);
 
         return $this->render('playground/query-playground.html.twig',
             array('data' => $data)

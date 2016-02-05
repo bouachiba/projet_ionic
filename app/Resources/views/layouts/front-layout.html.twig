@@ -40,7 +40,10 @@
             {% for article in popularArticles %}
                 <div>
                     <h4>{{ article.title }}</h4>
-                    <strong>le {{ article.createdAt | date('d/m/Y') }} par {{ article.author.fullName }}</strong>
+                    <strong>
+                        le {{ article.createdAt | date('d/m/Y') }} par {{ article.authorName }}
+                        ({{ article.numberOfComments }} commentaires)
+                    </strong>
                     <p>{{ article.lead }}</p>
                 </div>
                 <hr>
