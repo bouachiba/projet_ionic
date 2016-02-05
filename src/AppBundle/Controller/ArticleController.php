@@ -44,6 +44,21 @@ class ArticleController extends AbstractFrontEndController
     }
 
     /**
+     * @Route("/by-tag/{tag}", name="article_by_tag")
+     * @param $tag
+     * @return Response
+     */
+    public function showByTagAction($tag){
+        $ArticleRepository = $this->getDoctrine()->getRepository('AppBundle:Article');
+
+        $params = $this->getAsideData();
+        $params['allArticles'] = $ArticleRepository->getArticleByTag($tag);
+        $params['queryTitle'] = "par tag : $tag";
+
+        return $this->render('article/index.html.twig', $params);
+    }
+
+    /**
      * @Route("/new", name="article_new")
      * @Route("/edit/{id}", name="article_edit")
      * @param int $id
@@ -53,6 +68,4 @@ class ArticleController extends AbstractFrontEndController
     {
         return $this->render('article/form.html.twig');
     }
-
-
 }

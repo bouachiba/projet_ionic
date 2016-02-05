@@ -65,5 +65,15 @@ class ArticleRepository extends EntityRepository
         return $qb->getQuery()->getArrayResult();
     }
 
+    public function getArticleByTag($tag){
+        $qb = $this->createQueryBuilder('a')
+            ->select('a')
+            ->join('a.tags', 't')
+            ->where('t.tagName= :tag')
+            ->setParameter('tag', $tag);
+
+        return $qb->getQuery()->getResult();
+    }
+
 
 }
