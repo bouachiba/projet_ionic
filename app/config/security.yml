@@ -17,11 +17,17 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        # Sécurisation de la route /admin avec une authentification http
+        # Sécurisation de la route /admin avec une authentification par formulaire
         admin:
             pattern: ^/admin
-            # Utilise l'authentification http
-            http_basic: ~
+            provider: in_memory
+            form_login:
+              login_path: admin_login
+              check_path: admin_login_check
+              default_target_path: /admin
+            logout:
+              path: admin_logout
+              target: /
 
         main:
             anonymous: ~
@@ -37,3 +43,7 @@ security:
     # ici texte brut (mauvaise idée en production)
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
+
+    access_control:
+        # seuls les administrateurs peuvent créer de nouveaux auteurs
+        - { path: ^/author/new, roles: ROLE_ADMIN }
