@@ -11,6 +11,7 @@ use AppBundle\Controller\AbstractFrontEndController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+
 /**
  * Class ArticleController
  * @package AppBundle\Controller
@@ -132,43 +133,5 @@ class ArticleController extends AbstractFrontEndController
         return $this->render('article/index.html.twig', $params);
     }
 
-    /**
-     * @Route("/new", name="article_new")
-     * @Route("/edit/{id}", name="article_edit")
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function addEditAction(Request $request, $id = null)
-    {
-        if($id == null){
-            $article = new Article();
-            $postUrl = $this->generateUrl('article_new');
-        } else {
-            $articleRepository = $this->getDoctrine()->getRepository('AppBundle:Article');
-            $article = $articleRepository->find($id);
-            $postUrl = $this->generateUrl('article_edit', array('id' => $id));
-        }
 
-        $form = $this->createForm(ArticleType::class, $article,
-            array('action' => $postUrl)
-        );
-
-        $form->handleRequest($request);
-
-        if($form->isValid()){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($article);
-            $em->flush();
-
-            //Message Flash de confirmation
-            $this->addFlash('info','Votre article est enregistré dans la base de données');
-
-            return $this->redirectToRoute('author_home');
-        }
-
-        return $this->render('article/form.html.twig',
-            array('articleForm' => $form->createView())
-        );
-    }
 }
