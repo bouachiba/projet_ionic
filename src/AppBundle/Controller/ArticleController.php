@@ -161,6 +161,9 @@ class ArticleController extends AbstractFrontEndController
             $em->persist($article);
             $em->flush();
 
+            //Message Flash de confirmation
+            $this->addFlash('info','Votre article est enregistré dans la base de données');
+
             return $this->redirectToRoute('author_home');
         }
 
