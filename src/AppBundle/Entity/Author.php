@@ -68,6 +68,12 @@ class Author implements UserInterface, Serializable
      */
     private $articles;
 
+    /**
+     * Mot de passe en clair
+     * @var string
+     */
+    private $plainPassword;
+
 
 
     /**
@@ -173,6 +179,29 @@ class Author implements UserInterface, Serializable
     }
 
     /**
+     * Set plain password
+     *
+     * @param string $password
+     * @return Author
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
+     * Get plain password
+     *
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
      * @return string
      */
     public function getFullName(){
@@ -183,7 +212,7 @@ class Author implements UserInterface, Serializable
      * @ORM\PrePersist
      */
     public function prePersistEvent(){
-        $this->password = sha1($this->password);
+        $this->password = sha1($this->plainPassword);
     }
 
     /**
