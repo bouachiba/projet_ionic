@@ -37,3 +37,7 @@ security:
     # ici texte brut (mauvaise idée en production)
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
+
+    access-control:
+      # seuls les administrateurs peuvent créer de nouveaux auteurs
+      - { path: ^/author/new, roles: ROLE_ADMIN }
