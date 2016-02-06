@@ -2,8 +2,11 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Comment;
+use AppBundle\Form\CommentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Controller\AbstractFrontEndController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -33,12 +36,44 @@ class ArticleController extends AbstractFrontEndController
      * @Route("/{id}", name="article_details")
      * @return Response
      */
-    public function detailsAction($id)
+    public function detailsAction(Request $request, $id)
     {
+        //Récupération de l'article
         $articleRepository = $this->getDoctrine()->getRepository('AppBundle:Article');
+        $article = $articleRepository->find($id);
 
+        // Instanciation de Comment
+        // et initialisation de l'association avec l'article
+        // de façon à insérer un commentaire sur un article particulier
+        $comment = new Comment();
+        $comment->setArticle($article);
+
+        //Création du formulaire
+        $form = $this->createForm(CommentType::class,
+            $comment,
+            array(
+                'action' => $this->generateUrl('article_details', array('id' => $id))
+            )
+        );
+
+        // Hydratation du formulaire avec la requête
+        $form->handleRequest($request);
+
+        // Traitement du formulaire
+        if($form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($comment);
+            $em->flush();
+
+            //Redirection pour Réinitialiser le formulaire
+            return $this->redirectToRoute('article_details', array('id' => $id));
+
+        }
+
+        //Paramètres passés à la vue
         $params = $this->getAsideData();
-        $params['article'] = $articleRepository->find($id);
+        $params['article'] = $article;
+        $params['commentForm'] = $form->createView();
 
         return $this->render('article/details.html.twig', $params);
     }
