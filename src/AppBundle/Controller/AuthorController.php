@@ -26,7 +26,12 @@ class AuthorController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('author/index.html.twig');
+        $articleRepository = $this->getDoctrine()->getRepository('AppBundle:Article');
+        $articles = $articleRepository->getArticleByAuthor($this->getUser()->getId());
+
+        return $this->render('author/index.html.twig',
+            array('articles' => $articles)
+        );
     }
 
     /**
