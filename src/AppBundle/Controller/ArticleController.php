@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Comment;
 use AppBundle\Form\CommentType;
+use AppBundle\Entity\Article;
+use AppBundle\Form\ArticleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Controller\AbstractFrontEndController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,7 +35,7 @@ class ArticleController extends AbstractFrontEndController
     }
 
     /**
-     * @Route("/{id}", name="article_details")
+     * @Route("/{id}", name="article_details", requirements={"id": "\d+"})
      * @return Response
      */
     public function detailsAction(Request $request, $id)
@@ -133,11 +135,37 @@ class ArticleController extends AbstractFrontEndController
     /**
      * @Route("/new", name="article_new")
      * @Route("/edit/{id}", name="article_edit")
+     * @param Request $request
      * @param int $id
      * @return Response
      */
-    public function addEditAction($id = null)
+    public function addEditAction(Request $request, $id = null)
     {
-        return $this->render('article/form.html.twig');
+        if($id == null){
+            $article = new Article();
+            $postUrl = $this->generateUrl('article_new');
+        } else {
+            $articleRepository = $this->getDoctrine()->getRepository('AppBundle:Article');
+            $article = $articleRepository->find($id);
+            $postUrl = $this->generateUrl('article_edit', array('id' => $id));
+        }
+
+        $form = $this->createForm(ArticleType::class, $article,
+            array('action' => $postUrl)
+        );
+
+        $form->handleRequest($request);
+
+        if($form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($article);
+            $em->flush();
+
+            return $this->redirectToRoute('author_home');
+        }
+
+        return $this->render('article/form.html.twig',
+            array('articleForm' => $form->createView())
+        );
     }
 }
