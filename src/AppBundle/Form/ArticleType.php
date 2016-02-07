@@ -30,7 +30,7 @@ class ArticleType extends AbstractType
                 'label' => 'Texte',
                 'attr' => array('rows' => 12)
             ))
-            //->add('image')
+            ->add('image', ImageType::class, array('required' => false))
             //->add('tags')
             ->add('Enregistrer',SubmitType::class)
             ->add('Annuler',ResetType::class)
@@ -43,7 +43,7 @@ class ArticleType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Article'
+            'data_class' => 'AppBundle\Entity\Article',
         ));
     }
 }

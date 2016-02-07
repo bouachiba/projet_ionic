@@ -69,7 +69,7 @@ class Article
 
     /**
      * @var Image
-     *
+     * @Assert\Valid
      * @ORM\OneToOne(targetEntity="Image", cascade = {"persist", "remove"})
      */
     private $image;
@@ -357,5 +357,13 @@ class Article
      */
     public function preUpdateEvent(){
         $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * Indique si l'article possède une image associée
+     * @return bool
+     */
+    public function hasImage(){
+        return ($this->image !== null);
     }
 }

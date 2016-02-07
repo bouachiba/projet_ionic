@@ -56,28 +56,50 @@ class AuthorController extends Controller
      */
     public function addEditAction(Request $request, $id = null)
     {
+        // Récupération ou instanciation d'une entité Article
+        // selon que l'on est en mode création ou modification
         if($id == null){
             $article = new Article();
             // L'auteur de l'article est l'utilisateur identifié
             $article->setAuthor($this->getUser());
-
+            //action du formulaire
             $postUrl = $this->generateUrl('article_new');
         } else {
             $articleRepository = $this->getDoctrine()->getRepository('AppBundle:Article');
             $article = $articleRepository->find($id);
+            //action du formulaire
             $postUrl = $this->generateUrl('article_edit', array('id' => $id));
         }
 
+        // Création du formulaire
         $form = $this->createForm(ArticleType::class, $article,
             array('action' => $postUrl)
         );
 
+        // Hydratation du formulaire avec la requête
         $form->handleRequest($request);
 
+        // Traitement du formulaire
         if($form->isValid()){
+
+            //Attribution du chemin de base à l'entité Image dans Article
+            if($article->hasImage()){
+                $basePath = $this->get('kernel')->getRootDir();
+                $basePath = $basePath. '/../web/img/photos';
+                $article->getImage()->setBasePath($basePath);
+            }
+
+            // Persistence de l'entité Article et éventuellement
+            // de l'entité Image associée
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush();
+
+            // Upload manuel pour gérer la modification de l'image
+            // lorsque l'entité Image n'a pas changé
+            if($article->hasImage()) {
+                $article->getImage()->upload();
+            }
 
             //Message Flash de confirmation
             $this->addFlash('info','Votre article est enregistré dans la base de données');
