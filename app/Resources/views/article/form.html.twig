@@ -20,9 +20,14 @@
                 {{ form_row(articleForm.image.uploadedFile) }}
             </div>
             <div class="col-md-6">
-                {% if articleForm.image.vars.data.fileName is defined %}
+                {% set hasImage = (articleForm.image.vars.data.fileName is defined) %}
+
+                {% if hasImage %}
+                    {{ form_row(articleForm.image.toBeDeleted) }}
                     <img src="{{ asset('img/photos/' ~ articleForm.image.vars.data.fileName) }}"
                          class="article-medium-img">
+                {% else %}
+                    {% do articleForm.image.toBeDeleted.setRendered %}
                 {% endif %}
             </div>
         </fieldset>

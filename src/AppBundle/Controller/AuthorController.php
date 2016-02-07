@@ -81,17 +81,22 @@ class AuthorController extends Controller
 
         // Traitement du formulaire
         if($form->isValid()){
+            $em = $this->getDoctrine()->getManager();
 
             //Attribution du chemin de base à l'entité Image dans Article
             if($article->hasImage()){
                 $basePath = $this->get('kernel')->getRootDir();
                 $basePath = $basePath. '/../web/img/photos';
                 $article->getImage()->setBasePath($basePath);
+
+                //Suppression de l'image
+                if($article->getImage()->toBeDeleted()){
+                    $article->setImage(null);
+                }
             }
 
             // Persistence de l'entité Article et éventuellement
             // de l'entité Image associée
-            $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush();
 

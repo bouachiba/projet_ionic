@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,6 +22,7 @@ class ImageType extends AbstractType
             ->add('uploadedFile', FileType::class, array('label' => 'Choisissez un fichier'))
             ->add('legend', TextType::class, array('label' => 'Légende'))
             ->add('credit', TextType::class, array('label' => 'Crédit photo'))
+            ->add('toBeDeleted', CheckboxType::class, array('label' => 'Supprimer cette image'))
         ;
     }
     

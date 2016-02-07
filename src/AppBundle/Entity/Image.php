@@ -63,6 +63,17 @@ class Image
      */
     private $basePath;
 
+    private $toBeDeleted = false;
+
+    public function toBeDeleted(){
+        return $this->toBeDeleted;
+    }
+
+    public function setToBeDeleted($toBeDeleted){
+        $this->toBeDeleted = $toBeDeleted;
+        return $this;
+    }
+
     /**
      * @return UploadedFile
      */
