@@ -83,6 +83,17 @@ class AuthorController extends Controller
         if($form->isValid()){
             $em = $this->getDoctrine()->getManager();
 
+            //Gestion des tags
+            //récupération de la liste des tags
+            $tagsList = $form->get('tags')->getData();
+            //Conversion de la liste des tags en tableau
+            $tagsArray = explode(',',$tagsList);
+            $tagsArray = array_unique($tagsArray);
+
+            //var_dump($tagsArray);
+
+            //die();
+
             //Attribution du chemin de base à l'entité Image dans Article
             if($article->hasImage()){
                 $basePath = $this->get('kernel')->getRootDir();

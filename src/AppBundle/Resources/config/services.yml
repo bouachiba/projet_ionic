@@ -1,3 +1,9 @@
 services:
   data_provider:
     class: AppBundle\Services\FakeDataProvider
+
+  app.form.article:
+    class: AppBundle\Form\ArticleType
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: form.type }
