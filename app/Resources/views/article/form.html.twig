@@ -3,7 +3,34 @@
 {% block content %}
     <h1>Formulaire article</h1>
 
-    {{ form(articleForm) }}
+    {{ form_start(articleForm) }}
+
+    {{ form_errors(articleForm) }}
+
+    {{ form_row(articleForm.title) }}
+    {{ form_row(articleForm.lead) }}
+    {{ form_row(articleForm.text) }}
+
+    <div class="row">
+        <fieldset>
+            <legend>Image</legend>
+            <div class="col-md-6">
+                {{ form_row(articleForm.image.legend) }}
+                {{ form_row(articleForm.image.credit) }}
+                {{ form_row(articleForm.image.uploadedFile) }}
+            </div>
+            <div class="col-md-6">
+                {% if articleForm.image.vars.data.fileName is defined %}
+                    <img src="{{ asset('img/photos/' ~ articleForm.image.vars.data.fileName) }}"
+                         class="article-medium-img">
+                {% endif %}
+            </div>
+        </fieldset>
+    </div>
+    <div class="row">
+        {{ form_rest(articleForm) }}
+    </div>
+    {{ form_end(articleForm) }}
 
 {% endblock %}
 
