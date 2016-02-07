@@ -3,6 +3,16 @@
 {% block content %}
     <h1>Formulaire article</h1>
 
+    <!-- Macro pour le rendu d'un sous formulaire -->
+    {% macro prototypeTag(element) %}
+        <li class="col-md-3 btn btn-default">
+            {{ form_widget(element) }}
+            <button class='delete-tag btn btn-default'>supprimer<i class="glyphicon glyphicon-remove"></i></button>
+        </li>
+    {% endmacro %}
+    <!-- Importation des macros dans une variable -->
+    {% import _self as macro %}
+
     {{ form_start(articleForm) }}
 
     {{ form_errors(articleForm) }}
@@ -10,6 +20,28 @@
     {{ form_row(articleForm.title) }}
     {{ form_row(articleForm.lead) }}
     {{ form_row(articleForm.text) }}
+
+    <div class="row">
+        <fieldset>
+            <legend>Tags</legend>
+            <div class="form-group">
+                <button class="btn btn-primary" id="addTag">Ajouter un tag</button>
+            </div>
+
+            <ul id="tagList" class="list-unstyled"
+                data-prototype=
+                "{{ macro.prototypeTag(articleForm.tags.vars.prototype) | escape()}}"
+            >
+                {% for tag in articleForm.tags %}
+                    <li>
+                        {{ macro.prototypeTag(tag) }}
+                        {% do articleForm.tags.setRendered %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </fieldset>
+    </div>
+
 
     <div class="row">
         <fieldset>
@@ -41,4 +73,51 @@
 
 {% block aside %}
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        jQuery(document).ready(function () {
+
+            //Gestion de la collection Telephones
+            var $tagContainer = $('#tagList');
+            //Récupération du prototype
+            var prototype = $tagContainer.data('prototype');
+
+            //Suppression d'une ligne
+            $tagContainer.on('click', 'a.delete-tag', function (event) {
+                //Annule l'action implicite du lien
+                event.preventDefault();
+                //Récupère le <li> parent du lien cliqué
+                var $ligne = $(this).parent('li');
+                //Supprime le <li>
+                $ligne.remove();
+
+            });
+
+            //Ajout d'une ligne
+            $('#addTag').on('click', function (event) {
+            //$tagContainer.find('a.add-tag').on('click', function (event) {
+                //Annule l'action implicite du lien
+                event.preventDefault();
+                /*
+                 Récupération du nombre de lignes
+                 Le comptage jQuery ne fonctionne pas
+                 avec les éléments dynamiques
+                 */
+                var index = document.getElementById("tagList")
+                                .children.length -1;
+
+                //Affectation de l'index au gabarit
+                var template = prototype
+                        .replace(/__name__/g, index);
+
+                //Ajout du gabarit au conteneur
+                $tagContainer.append(template);
+            });
+
+        });
+    </script>
 {% endblock %}
