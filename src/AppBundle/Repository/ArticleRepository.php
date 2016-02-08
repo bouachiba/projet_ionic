@@ -94,5 +94,21 @@ class ArticleRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function getTotalNumberOfArticles(){
+        $qb = $this->createQueryBuilder('a')
+            ->select('count(a)');
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getArticlesByPage($maxPerPage, $page = 1){
+        $qb = $this->createQueryBuilder('a')
+            ->select('a')
+            ->setFirstResult(($page-1) * $maxPerPage)
+            ->setMaxResults($maxPerPage);
+
+        return $qb->getQuery()->getResult();
+    }
+
 
 }

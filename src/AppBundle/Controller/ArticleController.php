@@ -22,15 +22,25 @@ use Symfony\Component\HttpFoundation\Response;
 class ArticleController extends AbstractFrontEndController
 {
     /**
-     * @Route("/", name="article_list")
+     * @Route("/page/{page}", name="article_list", defaults={"page": 1})
+     * @param $page
      * @return Response
      */
-    public function indexAction()
+    public function indexAction($page)
     {
+        $articlesPerPage = 5;
+
         $articleRepository= $this->getDoctrine()->getRepository('AppBundle:Article');
 
+        $nbOfArticles = $articleRepository->getTotalNumberOfArticles();
+        $nbOfPages =  ceil($nbOfArticles / $articlesPerPage);
+
+
         $params = $this->getAsideData();
-        $params['allArticles'] = $articleRepository->findAll();
+        $params['allArticles'] = $articleRepository->getArticlesByPage($articlesPerPage, $page);
+        $params['nbOfPages'] = $nbOfPages;
+        $params['nbOfArticles'] = $nbOfArticles;
+        $params['currentPage'] = $page;
 
         return $this->render('article/index.html.twig', $params);
     }
