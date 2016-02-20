@@ -46,14 +46,14 @@ class ArticleController extends AbstractFrontEndController
     }
 
     /**
-     * @Route("/{id}", name="article_details", requirements={"id": "\d+"})
+     * @Route("/by-title/{slug}", name="article_details", requirements={"slug": "[a-zA-Z1-9\-_\/]+"})
      * @return Response
      */
-    public function detailsAction(Request $request, $id)
+    public function detailsAction(Request $request, $slug)
     {
         //Récupération de l'article
         $articleRepository = $this->getDoctrine()->getRepository('AppBundle:Article');
-        $article = $articleRepository->find($id);
+        $article = $articleRepository->findOneBySlug($slug);
 
         // Instanciation de Comment
         // et initialisation de l'association avec l'article
@@ -65,7 +65,7 @@ class ArticleController extends AbstractFrontEndController
         $form = $this->createForm(CommentType::class,
             $comment,
             array(
-                'action' => $this->generateUrl('article_details', array('id' => $id))
+                'action' => $this->generateUrl('article_details', array('slug' => $slug))
             )
         );
 
@@ -79,7 +79,7 @@ class ArticleController extends AbstractFrontEndController
             $em->flush();
 
             //Redirection pour Réinitialiser le formulaire
-            return $this->redirectToRoute('article_details', array('id' => $id));
+            return $this->redirectToRoute('article_details', array('slug' => $slug));
 
         }
 
