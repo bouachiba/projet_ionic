@@ -76,23 +76,22 @@ class AuthorController extends Controller
             array('action' => $postUrl)
         );
 
+        //var_dump($form->get('image')->get('uploadedFile'));
+
+
+        /*if($form->get('image')->get('uploadedFile') == null || $form->get('image')->get('toBeDeleted')){
+            $form->remove('image');
+            var_dump($form->get('image'));
+        }*/
+
+        //var_dump($form->getData());
+
         // Hydratation du formulaire avec la requête
         $form->handleRequest($request);
 
         // Traitement du formulaire
         if($form->isValid()){
             $em = $this->getDoctrine()->getManager();
-
-            //Gestion des tags
-            //récupération de la liste des tags
-            $tagsList = $form->get('tags')->getData();
-            //Conversion de la liste des tags en tableau
-            $tagsArray = explode(',',$tagsList);
-            $tagsArray = array_unique($tagsArray);
-
-            //var_dump($tagsArray);
-
-            //die();
 
             //Attribution du chemin de base à l'entité Image dans Article
             if($article->hasImage()){
@@ -101,10 +100,11 @@ class AuthorController extends Controller
                 $article->getImage()->setBasePath($basePath);
 
                 //Suppression de l'image
-                if($article->getImage()->toBeDeleted()){
+                if($article->getImage()->toBeDeleted() || $article->getImage()->mustBeDeleted()){
                     $article->setImage(null);
                 }
             }
+
 
             // Persistence de l'entité Article et éventuellement
             // de l'entité Image associée

@@ -33,7 +33,6 @@ class Image
     /**
      * @var string
      *
-     * @Assert\NotBlank(message="La légende ne peut être vide")
      * @ORM\Column(name="legend", type="string", length=255)
      */
     private $legend;
@@ -41,7 +40,6 @@ class Image
     /**
      * @var string
      *
-     * @Assert\NotBlank(message="Le crédit ne peut être vide")
      * @ORM\Column(name="credit", type="string", length=50)
      */
     private $credit;
@@ -234,5 +232,23 @@ class Image
 
             $this->uploadedFile = null;
         }
+    }
+
+    /**
+     * @Assert\True(message="La légende et le crédit doivent être renseignés")
+     */
+    public function hasLegendAndCredit(){
+        $valid = false;
+        $legendAndCreditOk = !empty($this->legend) && !empty($this->credit);
+
+        $valid =  $valid || ($this->uploadedFile != null && $legendAndCreditOk);
+        $valid =  $valid || ( !empty($this->fileName) && $legendAndCreditOk);
+        $valid =  $valid || ( empty($this->fileName));
+
+        return $valid;
+    }
+
+    public function mustBeDeleted(){
+        return empty($this->fileName) && empty($this->uploadedFile);
     }
 }
