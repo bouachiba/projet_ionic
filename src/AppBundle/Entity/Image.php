@@ -32,7 +32,6 @@ class Image
 
     /**
      * @var string
-     *
      * @ORM\Column(name="legend", type="string", length=255)
      */
     private $legend;

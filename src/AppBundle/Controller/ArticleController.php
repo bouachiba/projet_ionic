@@ -22,28 +22,38 @@ use Symfony\Component\HttpFoundation\Response;
 class ArticleController extends AbstractFrontEndController
 {
     /**
-     * @Route("/", name="article_list")
+     * @Route("/page/{page}", name="article_list", defaults={"page": 1})
+     * @param $page
      * @return Response
      */
-    public function indexAction()
+    public function indexAction($page)
     {
+        $articlesPerPage = 5;
+
         $articleRepository= $this->getDoctrine()->getRepository('AppBundle:Article');
 
+        $nbOfArticles = $articleRepository->getTotalNumberOfArticles();
+        $nbOfPages =  ceil($nbOfArticles / $articlesPerPage);
+
+
         $params = $this->getAsideData();
-        $params['allArticles'] = $articleRepository->findAll();
+        $params['allArticles'] = $articleRepository->getArticlesByPage($articlesPerPage, $page);
+        $params['nbOfPages'] = $nbOfPages;
+        $params['nbOfArticles'] = $nbOfArticles;
+        $params['currentPage'] = $page;
 
         return $this->render('article/index.html.twig', $params);
     }
 
     /**
-     * @Route("/{id}", name="article_details", requirements={"id": "\d+"})
+     * @Route("/by-title/{slug}", name="article_details", requirements={"slug": "[a-zA-Z1-9\-_\/]+"})
      * @return Response
      */
-    public function detailsAction(Request $request, $id)
+    public function detailsAction(Request $request, $slug)
     {
         //Récupération de l'article
         $articleRepository = $this->getDoctrine()->getRepository('AppBundle:Article');
-        $article = $articleRepository->find($id);
+        $article = $articleRepository->findOneBySlug($slug);
 
         // Instanciation de Comment
         // et initialisation de l'association avec l'article
@@ -55,7 +65,7 @@ class ArticleController extends AbstractFrontEndController
         $form = $this->createForm(CommentType::class,
             $comment,
             array(
-                'action' => $this->generateUrl('article_details', array('id' => $id))
+                'action' => $this->generateUrl('article_details', array('slug' => $slug))
             )
         );
 
@@ -69,7 +79,7 @@ class ArticleController extends AbstractFrontEndController
             $em->flush();
 
             //Redirection pour Réinitialiser le formulaire
-            return $this->redirectToRoute('article_details', array('id' => $id));
+            return $this->redirectToRoute('article_details', array('slug' => $slug));
 
         }
 
