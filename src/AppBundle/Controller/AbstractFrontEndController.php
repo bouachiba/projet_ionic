@@ -26,7 +26,8 @@ abstract class AbstractFrontEndController extends Controller
         $commentRepository = $this->getDoctrine()->getRepository('AppBundle:Comment');
         $lastComments = $commentRepository->getLastComments(5);
 
-        $popularArticles = $articleRepository->getMostPopularArticles(3);
+        //$popularArticles = $articleRepository->getMostPopularArticles(3);
+        $popularArticles = $articleRepository->getMostPopularArticleDQL(5);
 
         return array(
             'tags'    => $tags,

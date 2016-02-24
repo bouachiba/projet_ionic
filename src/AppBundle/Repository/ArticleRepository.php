@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use AppBundle\Entity\Article;
 
 
 /**
@@ -54,7 +55,7 @@ class ArticleRepository extends EntityRepository
         $qb = $this->createQueryBuilder('a')
             ->select("a.id, a.title, a.lead, a.createdAt,
                 concat_ws(' ',w.firstName,w.name) as authorName,
-                COUNT(a.id) as numberOfComments, a.slug")
+                COUNT(c.id) as numberOfComments, a.slug")
             ->join('a.comments','c')
             ->join('a.author','w')
             ->orderBy('numberOfComments', 'DESC')
@@ -62,7 +63,30 @@ class ArticleRepository extends EntityRepository
             ->addGroupBy('a.id')
             ->setMaxResults($numberOfArticles);
 
+        //var_dump($qb->getDQL());
+
         return $qb->getQuery()->getArrayResult();
+    }
+
+    public function getMostPopularArticleDQL($numberOfArticles){
+        $em = $this->getEntityManager();
+
+
+
+        $sql ="SELECT a.id, a.title, a.lead, a.createdAt,
+                concat_ws(' ',w.firstName,w.name) as authorName,
+                COUNT(c.id) as numberOfComments, a.slug
+                FROM AppBundle:Article as a
+                INNER JOIN a.comments as c
+                INNER JOIN a.author as w
+                GROUP BY a.id
+                ORDER BY numberOfComments DESC, a.createdAt DESC
+                ";
+
+        $query = $em->createQuery($sql)->setMaxResults($numberOfArticles);
+
+        return $query->getArrayResult();
+
     }
 
     public function getArticleByTag($tag){
