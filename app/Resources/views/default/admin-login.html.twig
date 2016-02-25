@@ -9,9 +9,14 @@
 
     {% if error %}
         <div class="alert alert-danger">
-            {{ error.message }}
+            {{ error.message |trans}}
         </div>
+        {{ error.messageKey | trans}}
     {% endif %}
+
+
+
+    {{ 'test'|trans }}
 
     <form method="post" action="{{ path('admin_login_check') }}" class="form-inline">
         <div class="form-group">
