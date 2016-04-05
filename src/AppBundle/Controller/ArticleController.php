@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @Route("article")
  */
 
-class ArticleController extends Controller
+class ArticleController extends AbstractFrontController
 {
     /**
      * @Route("/", name="article_list")
@@ -21,7 +21,8 @@ class ArticleController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('article/index.html.twig');
+        $params=$this->getAsideData();
+        return $this->render('article/index.html.twig',$params);
     }
 
     /**
@@ -30,7 +31,8 @@ class ArticleController extends Controller
      */
     public function detailsAction()
     {
-        return $this->render('article/details.html.twig');
+        $params=$this->getAsideData();
+        return $this->render('article/details.html.twig',$params);
     }
 
     /**

@@ -5,8 +5,10 @@
         <div class="panel-heading">Les tags</div>
         <div class="panel-body">
             <ul>
-                <li>PHP (5)</li>
-                <li>Symfony (8)</li>
+                {% for tag in tags %}
+                <li>{{tag.tagName}}({{tag.numberOfArticles}})</li>
+                {% endfor %}
+                
             </ul>
         </div>
     </div>
