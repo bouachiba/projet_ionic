@@ -5,20 +5,40 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-
+use AppBundle\Services\FakeDataProvider;
 class DefaultController extends Controller
 {
     /**
      * @Route("/", name="homepage")
      * @return Response
      */
-    public function indexAction()
-    {
+    public function indexAction(){
+        
+        $dataProvider=$this->getDataProvider();
+        $articles=$dataProvider->getAllArticles();
+        $tags=$dataProvider->getTags();
+        $params=array(
+            
+            
+            'articles'=>$articles,
+            'tags'=>$tags
+            
+        );
+        
 
         return $this->render(
             'default/index.html.twig',
-            array()
+            $params
         );
+    }
+    
+    /**
+     * 
+     * @return FakeDataProvider
+     */
+    private function getDataProvider() {
+        return $this->get('data_provider');
+        
     }
 
     /**
