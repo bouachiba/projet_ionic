@@ -3,7 +3,11 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use AppBundle\Entity\Image;
+use AppBundle\Entity\Author;
+use AppBundle\Entity\Comment;
+use AppBundle\Entity\Tag;
+use Doctrine\Common\Collections\arrayCollection;
 /**
  * Article
  *
@@ -55,6 +59,28 @@ class Article
      * @ORM\Column(name="updatedAt", type="datetime", nullable=true)
      */
     private $updatedAt;
+    
+    /**
+     *@ORM\OneToOne(targetEntity="Image")
+     * @var Image 
+     */
+    private $image;
+    /**
+     *@ORM\ManyToOne(targetEntity="Author")
+     * @ORM\JoinColumn(nullable=false)
+     * @var Author
+     */
+    private $auteur;
+    /**
+     *@ORM\OneToMany(targetEntity="comment",mappedBy="article")
+     * @var ArrayCollection
+     */
+      private $comments;
+      /**
+       *@ORM\ManyToMany(targetEntity="tag",inversedBy="articles")
+       * @var ArrayCollection
+       */
+      private $tag;
 
 
     /**
@@ -180,5 +206,125 @@ class Article
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+        $this->tag = new ArrayCollection();
+    }
+
+    /**
+     * Set image
+     *
+     * @param \AppBundle\Entity\Image $image
+     * @return Article
+     */
+    public function setImage(\AppBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \AppBundle\Entity\Image 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set auteur
+     *
+     * @param \AppBundle\Entity\Author $auteur
+     * @return Article
+     */
+    public function setAuteur(\AppBundle\Entity\Author $auteur)
+    {
+        $this->auteur = $auteur;
+
+        return $this;
+    }
+
+    /**
+     * Get auteur
+     *
+     * @return \AppBundle\Entity\Author 
+     */
+    public function getAuteur()
+    {
+        return $this->auteur;
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \AppBundle\Entity\comment $comments
+     * @return Article
+     */
+    public function addComment(\AppBundle\Entity\comment $comments)
+    {
+        $this->comments[] = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \AppBundle\Entity\comment $comments
+     */
+    public function removeComment(\AppBundle\Entity\comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * Add tag
+     *
+     * @param \AppBundle\Entity\tag $tag
+     * @return Article
+     */
+    public function addTag(\AppBundle\Entity\tag $tag)
+    {
+        $this->tag[] = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param \AppBundle\Entity\tag $tag
+     */
+    public function removeTag(\AppBundle\Entity\tag $tag)
+    {
+        $this->tag->removeElement($tag);
+    }
+
+    /**
+     * Get tag
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTag()
+    {
+        return $this->tag;
     }
 }

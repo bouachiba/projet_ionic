@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Article;
 
 /**
  * Comments
@@ -41,6 +42,15 @@ class Comment
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
+    /**
+     *@ORM\ManyToOne(targetEntity="article",inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     * 
+     * @var article
+     */
+    private $article;
+    
+            
 
 
     /**

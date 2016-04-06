@@ -27,6 +27,12 @@ class Tag
      * @ORM\Column(name="tagName", type="string", length=30, unique=true)
      */
     private $tagName;
+    /**
+     *@ORM\ManyToMany(targetEntity="article",mappedBy="tags")
+     * @var ArrayCollection
+     * @var type 
+     */
+    private $articles;
 
 
     /**
