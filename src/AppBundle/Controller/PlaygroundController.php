@@ -17,7 +17,7 @@ use DateTime;
  * Class PlaygroundController
  * @package AppBundle\Controller
  *
- * @Route("playground")
+ * @Route("/playground")
  */
 class PlaygroundController extends Controller
 {
@@ -109,10 +109,10 @@ class PlaygroundController extends Controller
      */
     public function testArticleAction(){
         $authorRepo = $this->getAuthorRepository();
-        $author = $authorRepo->findOneBy(array('email' =>'plegrand@gmail.com'));
+        $author = $authorRepo->findOneBy(array('email' =>'jFarrell@yahoo.com'));
 
         $image = new Image();
-        $image->setFileName('img02.jpg')
+        $image->setFileName('img30.jpg')
             ->setLegend('ma belle image')
             ->setCredit('mon oeuvre à moi');
 
@@ -125,11 +125,11 @@ class PlaygroundController extends Controller
             ->setImage($image);
 
         $tag = new Tag();
-        $tag->setTagName('Java');
+        $tag->setTagName('toto');
         $article->addTag($tag);
 
         $tag = new Tag();
-        $tag->setTagName('Hibernate');
+        $tag->setTagName('Football');
         $article->addTag($tag);
 
 

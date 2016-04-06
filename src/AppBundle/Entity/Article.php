@@ -12,6 +12,7 @@ use AppBundle\Entity\Author;
  *
  * @ORM\Table(name="articles")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ArticleRepository")
+ * @ORM\HaslifeCycleCallBacks()
  */
 class Article
 {
@@ -332,5 +333,18 @@ class Article
     public function getTags()
     {
         return $this->tags;
+    }
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersistEvent(){
+        
+        $this->createdAt=new\dateTime();
+    }
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdateEvent(){
+        $this->updatedAt =new\dateTime();
     }
 }

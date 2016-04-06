@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Author
@@ -24,8 +25,10 @@ class Author
     private $id;
 
     /**
+     * 
      * @var string
      *
+     * @Assert\NotBlank(message="le nom ne peut etre vide")
      * @ORM\Column(name="name", type="string", length=30)
      */
     private $name;
@@ -33,17 +36,25 @@ class Author
     /**
      * @var string
      *
+     * 
      * @ORM\Column(name="firstName", type="string", length=30, nullable=true)
      */
     private $firstName;
 
     /**
+     * 
+     * @Assert\NotBlank(message="l adresse  e-email ne peut etre vide")
+     * @Assert\Email(message="le contenu du champs ne peut etre vide")
      * @var string
      * @ORM\Column(name="email", type="string", unique=true)
      */
     private $email;
 
     /**
+     * @Assert\Length(min=8,max=15,
+     * minMessage="le mot de passe doit comporter{{limit}} caractere au minimum",
+     * maxMessage="le mot de passe ne peut depasser{{limit}} caractere "
+     * )
      * @var string
      * @ORM\Column(name="password", type="string", length=128)
      */
