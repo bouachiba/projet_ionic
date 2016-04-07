@@ -16,9 +16,16 @@ abstract class AbstractFrontEndController extends Controller
 
     protected function getAsideData(){
         $dataProvider = $this->getDataProvider();
-        $tags = $dataProvider->getTags();
-        $archives = $dataProvider->getArchive();
-        $authors = $dataProvider->getAllAuthors();
+        
+        $tagRepository=$this->getDoctrine()->getRepository('AppBundle:Tag');
+          $tags = $tagRepository->getTagList()->getArrayResult();
+        
+        $articleRepository= $this->getDoctrine()->getRepository('AppBundle:Article');
+        $archives = $articleRepository->getArchive();
+        
+         $AuthorRepository=$this->getDoctrine()->getRepository('AppBundle:Author');
+        $authors = $AuthorRepository->getAuteurList()->getArrayResult();
+        
         $lastComments = $dataProvider->getAllComments();
         $popularArticles = $dataProvider->getAllArticles();
 

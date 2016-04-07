@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @package AppBundle\Entity
  *
  * @ORM\Table(name="authors")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\AuthorRepository")
  */
 class Author
 {
@@ -56,7 +56,12 @@ class Author
      * @ORM\Column(name="password", type="string", length=128)
      */
     private $password;
-
+    /**
+     *@ORM\OneToMany(targetEntity="Article",mappedBy="author")
+     * @ORM\JoinColumn(nullable=false)
+     * @var ArrayCollection
+     */
+    private $articles;
 
 
     /**
@@ -166,5 +171,45 @@ class Author
      */
     public function getFullName(){
         return implode(' ', array_filter([$this->firstName, $this->name]));
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add articles
+     *
+     * @param \AppBundle\Entity\Article $articles
+     * @return Author
+     */
+    public function addArticle(\AppBundle\Entity\Article $articles)
+    {
+        $this->articles[] = $articles;
+
+        return $this;
+    }
+
+    /**
+     * Remove articles
+     *
+     * @param \AppBundle\Entity\Article $articles
+     */
+    public function removeArticle(\AppBundle\Entity\Article $articles)
+    {
+        $this->articles->removeElement($articles);
+    }
+
+    /**
+     * Get articles
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getArticles()
+    {
+        return $this->articles;
     }
 }

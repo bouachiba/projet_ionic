@@ -21,13 +21,33 @@ class ArticleController extends AbstractFrontEndController
      */
     public function indexAction()
     {
-        $dataProvider = $this->getDataProvider();
+        $repositoryArticle = $this->getDoctrine()->getRepository('AppBundle:Article');
 
         $params = $this->getAsideData();
-        $params['allArticles'] = $dataProvider->getAllArticles();
+        $params['allArticles'] = $repositoryArticle->getAll();
 
         return $this->render('article/index.html.twig', $params);
     }
+    /**
+     * @Route("/by-tag/{tag}", name="article_by_tag")
+     * @return Response
+     */
+     public function showByTagAction($tag)
+    {
+       $repositoryArticle = $this->getDoctrine()->getRepository('AppBundle:Article');
+
+        $params = $this->getAsideData();
+        $params['allArticles'] = $repositoryArticle->getArticleByTag($tag);
+         $params['searchTite']="par tag:$tag";
+        return $this->render('article/index.html.twig', $params);
+    }
+   
+        
+        
+        
+        
+        
+    
 
     /**
      * @Route("/{id}", name="article_details")

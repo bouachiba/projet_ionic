@@ -70,14 +70,14 @@ class Article
     /**
      * @var Image
      *
-     * @ORM\OneToOne(targetEntity="Image", cascade = {"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Image", cascade = {"persist", "remove"},fetch="EAGER")
      */
     private $image;
 
     /**
      * @var Author
      *
-     * @ORM\ManyToOne(targetEntity="Author")
+     * @ORM\ManyToOne(targetEntity="Author", inversedBy="articles" ,fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $author;

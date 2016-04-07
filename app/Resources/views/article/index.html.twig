@@ -1,7 +1,11 @@
 {% extends 'layouts/front-layout.html.twig' %}
 
 {% block content %}
-    <h2>Liste des articles</h2>
+    <h2>Liste des articles
+    {% if searchTitle is defined %}
+        {{ searchTitle}}
+        {%endif%}
+    </h2>
 
         {% for article in allArticles %}
         <div class="panel panel-default">

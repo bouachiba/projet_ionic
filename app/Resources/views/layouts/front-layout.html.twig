@@ -6,7 +6,11 @@
         <div class="panel-body">
             <ul class="list-inline">
                 {% for tag in tags %}
-                    <li>{{ tag.tagName }} ({{ tag.numberOfArticles }})</li>
+                    <li>
+                        <a href="{{path('article_by_tag',{'tag':tag.tagName})}}">
+                        {{ tag.tagName }} ({{ tag.numberOfArticles }})
+                        </a>
+                    </li>
                 {% endfor %}
             </ul>
         </div>
